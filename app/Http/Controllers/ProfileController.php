@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FileUploadRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
@@ -73,9 +75,26 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProfileRequest $request)
     {
-        //
+        try {
+            $request->validated();
+            $user = Auth::user();
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            return back()->with('success', 'Profile updated!');
+        } catch (Exception $e) {
+            Log::error("Profile Update Failed", ['error' => $e->getMessage()]);
+
+            return redirect()->back()->with('error', 'An error occurred during update profile. Please try again later.');
+        }
     }
 
     /**

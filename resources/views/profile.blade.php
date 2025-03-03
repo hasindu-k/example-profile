@@ -37,10 +37,18 @@
                 <p class="text-sm text-gray-500">Joined on {{ auth()->user()->created_at->diffForHumans() }}</p>
             </div>
 
-            <form action="" method="POST">
-                <x-input-field type="text" name="name" label="Name" />
-                <x-input-field type="email" name="email" label="Email" />
-                <x-input-field type="password" name="password" label="Password" />
+            <form action="{{ route('profile.update') }}" method="POST">
+                @method('PUT')
+                @csrf
+                <x-input-field type="text" name="name" label="Name" value="{{ auth()->user()->name }}" />
+                <x-input-field type="email" name="email" label="Email" value="{{ auth()->user()->email }}" />
+                <x-input-field type="password" name="password" label="New Password" />
+                <x-input-field type="password" name="password_confirmation" label="Confirm Password" />
+
+                <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md
+                    hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Update Profile</button>
             </form>
         </div>
     </div>

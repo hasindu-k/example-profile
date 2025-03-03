@@ -21,6 +21,7 @@ Route::middleware('auth')->get('/profile', [ProfileController::class, 'show'])->
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/upload-photo', [ProfileController::class, 'updateProfilePicture'])->name('profile.upload-photo');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Route::prefix('users')->name('users.')->middleware('role:superAdmin,teacher')
