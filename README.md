@@ -16,4 +16,7 @@ To install the necessary dependencies, run the following commands:
 
     ```bash
     php artisan make:component InputField
+
+    php artisan make:mail UserWelcomeMail
+
     ```
