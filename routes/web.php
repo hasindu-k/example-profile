@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DownloadFileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
     Route::get('/students/store', [StudentController::class, 'store'])->name('students.store');
+
+    Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 });
+
+Route::get('download-file', [DownloadFileController::class, 'downloadFile'])->name('download-file');
 
 Route::fallback(function () {
     return view('not-found');

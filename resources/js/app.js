@@ -30,3 +30,26 @@ $(document).ready(function () {
         }
     });
 });
+
+$(document).on("click", ".delete-btn", function () {
+    let id = $(this).data("id");
+
+    if (!confirm("Are you sure you want to delete this student?")) {
+        return;
+    }
+
+    $.ajax({
+        url: `/students/${id}`,
+        method: "DELETE",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"), // CSRF token for Laravel
+        },
+        success: function (response) {
+            alert(response.message);
+            location.reload(); // Refresh the page after deletion
+        },
+        error: function (xhr) {
+            alert("Error deleting student.");
+        },
+    });
+});
