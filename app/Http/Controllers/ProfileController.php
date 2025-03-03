@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FileUploadRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -43,17 +45,29 @@ class ProfileController extends Controller
 
     public function updateProfilePicture(FileUploadRequest $request)
     {
-        $user = Auth::user();
+        try {
+            $request->validated();
+            $user = Auth::user();
 
-        $file = $request->file('file');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file = $request->file('file');
 
-        $path = $file->storeAs('profile_pictures', $filename, env('FILESYSTEM_DISK'));
+            if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
+                return back()->with('error', 'No file selected or the file is invalid.');
+            }
 
-        $user->profile_picture = $path;
-        $user->save();
+            $filename = time() . '.' . $file->getClientOriginalExtension();
 
-        return back()->with('success', 'Profile picture updated!');
+            $path = $file->storeAs('profile_pictures', $filename, env('FILESYSTEM_DISK'));
+
+            $user->profile_picture = $path;
+            $user->save();
+
+            return back()->with('success', 'Profile picture updated!');
+        } catch (Exception $e) {
+            Log::error("Profile Photo Upload Failed", ['error' => $e->getMessage()]);
+
+            return redirect()->back()->with('error', 'An error occurred during photo upload. Please try again later.');
+        }
     }
 
     /**

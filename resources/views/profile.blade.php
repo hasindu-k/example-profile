@@ -7,22 +7,30 @@
         <div>
             <h2 class="text-2xl font-bold text-center mb-6">Profile</h2>
 
-            <div class="text-center mb-6 relative group">
-                <img src="{{ auth()->user()->profile_picture ?? env('FILESYSTEM_URL') . 'default-profile.png' }}"
-                    class="w-24 h-24 rounded-full mx-auto cursor-pointer" id="profile-image" alt="Profile Picture">
-                <div
-                    class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button type="button" class="bg-gray-500 text-white rounded-full p-2" id="upload-button">
-                        <span class="text-xl">+</span>
-                    </button>
+            <div class="text-center mb-6">
+                <div class="w-24 h-24 rounded-full mx-auto relative group">
+                    <img src="{{ env('FILESYSTEM_URL') . auth()->user()->profile_picture ?? env('FILESYSTEM_URL') . 'default-profile.png' }}"
+                        class="cursor-pointer rounded-full w-24 h-24" id="profile-image" alt="Profile Picture">
+                    <div
+                        class="absolute top-0 left-0 flex items-center justify-center opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                        <button type="button" class="bg-gray-500 text-white rounded-full p-2  w-24 h-24" id="upload-button">
+                            <span class="text-xl">+</span>
+                        </button>
+                    </div>
                 </div>
 
                 <form action="{{ route('profile.upload-photo') }}" method="POST" enctype="multipart/form-data"
                     class="hidden" id="upload-form">
                     @csrf
-                    <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" class="hidden">
+                    <input type="file" name="file" id="profile-picture-input" accept="image/*" class="hidden">
+
+                    @error('file')
+                        <div class="text-red-500 mt-2 text-sm font-medium">{{ $message }}</div>
+                    @enderror
                     <button type="submit" class="hidden" id="submit-button"></button>
                 </form>
+
+
 
                 <p class="text-lg font-semibold mt-2">{{ auth()->user()->name }}</p>
                 <p class="text-sm text-gray-600">{{ auth()->user()->email }}</p>

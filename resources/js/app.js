@@ -25,7 +25,7 @@ $(document).ready(function () {
     });
 
     $("#profile-picture-input").change(function () {
-        if ($(this).files.length > 0) {
+        if (this.files.length > 0) {
             $("#upload-form").submit();
         }
     });
