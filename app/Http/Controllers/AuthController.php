@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
     public function register(RegisterRequest $request)
     {
         try {
