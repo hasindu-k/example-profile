@@ -15,4 +15,18 @@ $(document).ready(function () {
             eyeIcon.removeClass("fa-eye-slash").addClass("fa-eye");
         }
     });
+
+    $("#profile-image").click(function () {
+        $("#profile-picture-input").click();
+    });
+
+    $("#upload-button").click(function () {
+        $("#profile-picture-input").click();
+    });
+
+    $("#profile-picture-input").change(function () {
+        if ($(this).files.length > 0) {
+            $("#upload-form").submit();
+        }
+    });
 });
