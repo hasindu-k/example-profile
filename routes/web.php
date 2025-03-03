@@ -10,6 +10,9 @@ Route::get('/', function () {
 Route::prefix('auth')->middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegistrationForm')->name('register');
     Route::post('/register', 'register')->name('register.submit');
+
+    Route::get('/login', 'showLoginForm')->name('login');
+    Route::post('/login', 'login')->name('login.submit');
 });
 
 // Route::prefix('users')->name('users.')->middleware('role:superAdmin,teacher')

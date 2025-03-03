@@ -3,9 +3,9 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import $ from "jquery";
 
 $(document).ready(function () {
-    $("#togglePassword").click(function () {
-        let passwordField = $("#confirm-password");
-        let eyeIcon = $("#eyeIcon");
+    $(".togglePassword").click(function () {
+        let passwordField = $(this).closest("div").find("input");
+        let eyeIcon = $(this).find("i");
 
         if (passwordField.attr("type") === "password") {
             passwordField.attr("type", "text");
