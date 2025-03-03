@@ -8,11 +8,11 @@
             <h2 class="text-2xl font-bold text-center mb-6">Profile</h2>
 
             <div class="text-center mb-6">
-                <img src="{{ auth()->user()->profile_picture ?? asset('default-profile.png') }}" alt="Profile Picture"
+                <img src="{{ auth()->user()->profile_picture ?? env('FILESYSTEM_URL') . 'default-profile.png' }}"
                     class="w-24 h-24 rounded-full mx-auto">
                 <p class="text-lg font-semibold mt-2">{{ auth()->user()->name }}</p>
                 <p class="text-sm text-gray-600">{{ auth()->user()->email }}</p>
-                <p class="text-sm text-gray-500">Joined on {{ auth()->user()->created_at->format('F d, Y') }}</p>
+                <p class="text-sm text-gray-500">Joined on {{ auth()->user()->created_at->diffForHumans() }}</p>
             </div>
 
             <form action="" method="POST">
