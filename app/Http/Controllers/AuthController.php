@@ -64,4 +64,12 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'An error occurred during login. Please try again later.');
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 }

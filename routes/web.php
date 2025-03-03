@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,11 +18,18 @@ Route::prefix('auth')->middleware('guest')->controller(AuthController::class)->g
 });
 
 Route::middleware('auth')->get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::middleware('auth')->post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/upload-photo', [ProfileController::class, 'updateProfilePicture'])->name('profile.upload-photo');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
+    Route::get('/students/store', [StudentController::class, 'store'])->name('students.store');
+});
+
+Route::fallback(function () {
+    return view('not-found');
 });
 
 // Route::prefix('users')->name('users.')->middleware('role:superAdmin,teacher')
