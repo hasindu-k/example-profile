@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +15,8 @@ Route::prefix('auth')->middleware('guest')->controller(AuthController::class)->g
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login')->name('login.submit');
 });
+
+Route::middleware('auth')->get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 
 // Route::prefix('users')->name('users.')->middleware('role:superAdmin,teacher')
 

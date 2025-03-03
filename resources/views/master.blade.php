@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Page')</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
     @yield('content')
 </body>
 
